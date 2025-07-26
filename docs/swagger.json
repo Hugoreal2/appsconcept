@@ -3,16 +3,6 @@
     "info": {
         "description": "A production-ready REST API server that implements a customizable FizzBuzz algorithm with request statistics tracking.",
         "title": "FizzBuzz REST API",
-        "termsOfService": "http://swagger.io/terms/",
-        "contact": {
-            "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
-        },
-        "license": {
-            "name": "MIT",
-            "url": "https://opensource.org/licenses/MIT"
-        },
         "version": "1.0"
     },
     "host": "localhost:8080",
