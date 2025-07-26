@@ -1,0 +1,113 @@
+basePath: /api/v1
+definitions:
+  handler.ErrorResponse:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+    type: object
+  handler.FizzBuzzResponse:
+    properties:
+      result:
+        items:
+          type: string
+        type: array
+    type: object
+  stats.RequestStats:
+    properties:
+      count:
+        type: integer
+      int1:
+        type: integer
+      int2:
+        type: integer
+      limit:
+        type: integer
+      str1:
+        type: string
+      str2:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: A production-ready REST API server that implements a customizable FizzBuzz
+    algorithm with request statistics tracking.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://swagger.io/terms/
+  title: FizzBuzz REST API
+  version: "1.0"
+paths:
+  /fizzbuzz:
+    get:
+      consumes:
+      - application/json
+      description: Generate a customizable FizzBuzz sequence based on provided parameters
+      parameters:
+      - description: First integer for replacement logic
+        in: query
+        minimum: 1
+        name: int1
+        required: true
+        type: integer
+      - description: Second integer for replacement logic
+        in: query
+        minimum: 1
+        name: int2
+        required: true
+        type: integer
+      - description: Upper limit for the sequence
+        in: query
+        maximum: 10000
+        minimum: 1
+        name: limit
+        required: true
+        type: integer
+      - description: String to replace multiples of int1
+        in: query
+        name: str1
+        required: true
+        type: string
+      - description: String to replace multiples of int2
+        in: query
+        name: str2
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.FizzBuzzResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Generate FizzBuzz sequence
+      tags:
+      - fizzbuzz
+  /stats:
+    get:
+      consumes:
+      - application/json
+      description: Returns the most frequently requested parameters and their count
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'message: No requests recorded yet'
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get request statistics
+      tags:
+      - stats
+swagger: "2.0"
