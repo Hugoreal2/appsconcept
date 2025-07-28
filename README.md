@@ -10,10 +10,6 @@ A production-ready REST API server that implements a customizable FizzBuzz algor
 
 ## API Endpoints
 
-### OpenAPI Documentation
-
-Interactive API documentation is available at `/swagger/index.html` when the server is running.
-
 ### GET /api/v1/fizzbuzz
 
 Generates a FizzBuzz sequence based on the provided parameters.
@@ -78,17 +74,14 @@ For each number from 1 to `limit`:
 
 1. **Prerequisites:**
    - Go 1.24.5 or later
-   - Git
 
 2. **Clone and run:**
    ```bash
-   git clone <repository-url>
-   cd appsconcept
    go mod tidy
    go run main.go
    ```
 
-3. **The server will start on port 8080**
+3. **The server will start on port 8080 by default**
 
 ### Using Docker
 
