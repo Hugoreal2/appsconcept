@@ -124,34 +124,16 @@ go run github.com/swaggo/swag/cmd/swag@latest init
 
 Access the interactive documentation at `http://localhost:8080/swagger/index.html` when running the server.
 
-## Project Structure
-
-```
-├── main.go                    # Application entry point
-├── docs/                      # Generated OpenAPI documentation
-│   ├── docs.go
-│   ├── swagger.json
-│   └── swagger.yaml
-├── internal/
-│   ├── handler/              # HTTP handlers
-│   │   └── fizzbuzz.go
-│   ├── service/              # Business logic
-│   │   ├── fizzbuzz.go
-│   │   └── fizzbuzz_test.go
-│   └── stats/                # Statistics tracking
-│       ├── service.go
-│       └── service_test.go
-├── Dockerfile                # Docker configuration
-├── go.mod                    # Go module definition
-└── README.md                 # This file
-```
-
 ## Architecture
 
 The application follows a clean architecture pattern:
 
 - **Handler Layer**: Handles HTTP requests/responses, input validation, and statistics retrieval
 - **Service Layer**: Contains business logic for FizzBuzz generation and request statistics
+
+### Statistics Storage
+
+The request statistics are currently stored in memory for simplification. In a production environment, these statistics should be persisted in a database (e.g., PostgreSQL, MongoDB, or Redis) to ensure data durability across server restarts and to support horizontal scaling.
 
 ## Production Considerations
 

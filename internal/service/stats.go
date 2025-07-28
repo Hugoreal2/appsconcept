@@ -1,4 +1,4 @@
-package stats
+package service
 
 import (
 	"fmt"
@@ -15,15 +15,15 @@ type RequestStats struct {
 	Count int    `json:"count"`
 }
 
-// Service handles request statistics
-type Service struct {
+// StatsService handles request statistics
+type StatsService struct {
 	mu    sync.RWMutex
 	stats map[string]*RequestStats
 }
 
-// NewService creates a new statistics service
-func NewService() *Service {
-	return &Service{
+// NewStatsService creates a new statistics service
+func NewStatsService() *StatsService {
+	return &StatsService{
 		stats: make(map[string]*RequestStats),
 	}
 }
@@ -31,7 +31,7 @@ func NewService() *Service {
 // RecordRequest records a fizzbuzz request for statistics
 // It increments the count for the request parameters or creates a new entry if it doesn't exist.
 // It's thread-safe, using a mutex to protect access to the stats map.
-func (s *Service) RecordRequest(int1, int2, limit int, str1, str2 string) {
+func (s *StatsService) RecordRequest(int1, int2, limit int, str1, str2 string) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
@@ -52,7 +52,7 @@ func (s *Service) RecordRequest(int1, int2, limit int, str1, str2 string) {
 }
 
 // GetMostFrequentRequest returns the most frequently requested parameters
-func (s *Service) GetMostFrequentRequest() *RequestStats {
+func (s *StatsService) GetMostFrequentRequest() *RequestStats {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 
@@ -70,6 +70,6 @@ func (s *Service) GetMostFrequentRequest() *RequestStats {
 }
 
 // generateKey creates a unique key for the request parameters
-func (s *Service) generateKey(int1, int2, limit int, str1, str2 string) string {
+func (s *StatsService) generateKey(int1, int2, limit int, str1, str2 string) string {
 	return fmt.Sprintf("%d:%d:%d:%s:%s", int1, int2, limit, str1, str2)
 }

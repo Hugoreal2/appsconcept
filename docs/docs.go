@@ -9,6 +9,16 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -99,12 +109,15 @@ const docTemplate = `{
                 "summary": "Get request statistics",
                 "responses": {
                     "200": {
-                        "description": "message: No requests recorded yet",
+                        "description": "Most frequent request statistics",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/handler.StatsResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "No requests recorded yet",
+                        "schema": {
+                            "$ref": "#/definitions/handler.NoStatsResponse"
                         }
                     }
                 }
@@ -134,7 +147,15 @@ const docTemplate = `{
                 }
             }
         },
-        "stats.RequestStats": {
+        "handler.NoStatsResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "handler.StatsResponse": {
             "type": "object",
             "properties": {
                 "count": {
@@ -160,7 +181,6 @@ const docTemplate = `{
     }
 }`
 
-// SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "localhost:8080",

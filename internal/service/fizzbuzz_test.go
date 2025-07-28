@@ -3,14 +3,11 @@ package service
 import (
 	"testing"
 
-	"github.com/Hugoreal2/appsconcept/internal/stats"
-
 	"github.com/stretchr/testify/assert"
 )
 
 func TestFizzBuzzService_GenerateFizzBuzz(t *testing.T) {
-	statsService := stats.NewService()
-	service := NewFizzBuzzService(statsService)
+	service := NewFizzBuzzService()
 
 	tests := []struct {
 		name     string
@@ -59,8 +56,7 @@ func TestFizzBuzzService_GenerateFizzBuzz(t *testing.T) {
 }
 
 func TestFizzBuzzService_processNumber(t *testing.T) {
-	statsService := stats.NewService()
-	service := NewFizzBuzzService(statsService)
+	service := NewFizzBuzzService()
 
 	tests := []struct {
 		name     string

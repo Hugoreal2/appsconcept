@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/Hugoreal2/appsconcept/internal/service"
-	"github.com/Hugoreal2/appsconcept/internal/stats"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,11 +11,11 @@ import (
 // FizzBuzzHandler handles HTTP requests for fizzbuzz operations
 type FizzBuzzHandler struct {
 	service      *service.FizzBuzzService
-	statsService *stats.Service
+	statsService *service.StatsService
 }
 
 // NewFizzBuzzHandler creates a new fizzbuzz handler
-func NewFizzBuzzHandler(service *service.FizzBuzzService, statsService *stats.Service) *FizzBuzzHandler {
+func NewFizzBuzzHandler(service *service.FizzBuzzService, statsService *service.StatsService) *FizzBuzzHandler {
 	return &FizzBuzzHandler{
 		service:      service,
 		statsService: statsService,
@@ -41,6 +40,21 @@ type FizzBuzzResponse struct {
 type ErrorResponse struct {
 	Error   string `json:"error"`
 	Message string `json:"message,omitempty"`
+}
+
+// StatsResponse represents the response for the most frequent request statistics
+type StatsResponse struct {
+	Int1  int    `json:"int1"`
+	Int2  int    `json:"int2"`
+	Limit int    `json:"limit"`
+	Str1  string `json:"str1"`
+	Str2  string `json:"str2"`
+	Count int    `json:"count"`
+}
+
+// NoStatsResponse represents the response when no requests have been recorded
+type NoStatsResponse struct {
+	Message string `json:"message"`
 }
 
 // FizzBuzz handles the fizzbuzz endpoint
@@ -95,18 +109,25 @@ func (h *FizzBuzzHandler) FizzBuzz(c *gin.Context) {
 // @Tags stats
 // @Accept json
 // @Produce json
-// @Success 200 {object} stats.RequestStats
-// @Success 200 {object} map[string]string "message: No requests recorded yet"
+// @Success 200 {object} StatsResponse "Most frequent request statistics"
+// @Success 404 {object} NoStatsResponse "No requests recorded yet"
 // @Router /stats [get]
 func (h *FizzBuzzHandler) GetStats(c *gin.Context) {
 	stats := h.statsService.GetMostFrequentRequest()
 
 	if stats == nil {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "No requests recorded yet",
+		c.JSON(http.StatusNotFound, NoStatsResponse{
+			Message: "No requests recorded yet",
 		})
 		return
 	}
 
-	c.JSON(http.StatusOK, stats)
+	c.JSON(http.StatusOK, StatsResponse{
+		Int1:  stats.Int1,
+		Int2:  stats.Int2,
+		Limit: stats.Limit,
+		Str1:  stats.Str1,
+		Str2:  stats.Str2,
+		Count: stats.Count,
+	})
 }

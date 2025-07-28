@@ -1,4 +1,4 @@
-package stats
+package service
 
 import (
 	"testing"
@@ -7,7 +7,7 @@ import (
 )
 
 func TestStatsService_RecordRequest(t *testing.T) {
-	service := NewService()
+	service := NewStatsService()
 
 	// Record the same request multiple times
 	service.RecordRequest(3, 5, 100, "fizz", "buzz")
@@ -25,14 +25,14 @@ func TestStatsService_RecordRequest(t *testing.T) {
 }
 
 func TestStatsService_GetMostFrequentRequest_Empty(t *testing.T) {
-	service := NewService()
+	service := NewStatsService()
 
 	mostFrequent := service.GetMostFrequentRequest()
 	assert.Nil(t, mostFrequent)
 }
 
 func TestStatsService_GenerateKey(t *testing.T) {
-	service := NewService()
+	service := NewStatsService()
 
 	key1 := service.generateKey(3, 5, 100, "fizz", "buzz")
 	key2 := service.generateKey(3, 5, 100, "fizz", "buzz")

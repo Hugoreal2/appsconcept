@@ -8,7 +8,6 @@ import (
 	_ "github.com/Hugoreal2/appsconcept/docs"
 	"github.com/Hugoreal2/appsconcept/internal/handler"
 	"github.com/Hugoreal2/appsconcept/internal/service"
-	"github.com/Hugoreal2/appsconcept/internal/stats"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -36,17 +35,17 @@ func main() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	// Initialize dependencies
-	statsService := stats.NewService()
-	fizzbuzzService := service.NewFizzBuzzService()
-	fizzbuzzHandler := handler.NewFizzBuzzHandler(fizzbuzzService, statsService)
-
 	// Setup router
 	router := gin.New()
 
 	// Add middleware
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
+
+	// Initialize dependencies
+	statsService := service.NewStatsService()
+	fizzbuzzService := service.NewFizzBuzzService()
+	fizzbuzzHandler := handler.NewFizzBuzzHandler(fizzbuzzService, statsService)
 
 	// Health check endpoint
 	router.GET("/health", func(c *gin.Context) {

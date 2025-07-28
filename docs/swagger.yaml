@@ -14,7 +14,12 @@ definitions:
           type: string
         type: array
     type: object
-  stats.RequestStats:
+  handler.NoStatsResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  handler.StatsResponse:
     properties:
       count:
         type: integer
@@ -31,8 +36,16 @@ definitions:
     type: object
 host: localhost:8080
 info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
   description: A production-ready REST API server that implements a customizable FizzBuzz
     algorithm with request statistics tracking.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://swagger.io/terms/
   title: FizzBuzz REST API
   version: "1.0"
 paths:
@@ -94,11 +107,13 @@ paths:
       - application/json
       responses:
         "200":
-          description: 'message: No requests recorded yet'
+          description: Most frequent request statistics
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/handler.StatsResponse'
+        "404":
+          description: No requests recorded yet
+          schema:
+            $ref: '#/definitions/handler.NoStatsResponse'
       summary: Get request statistics
       tags:
       - stats
