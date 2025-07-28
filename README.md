@@ -151,8 +151,7 @@ Access the interactive documentation at `http://localhost:8080/swagger/index.htm
 The application follows a clean architecture pattern:
 
 - **Handler Layer**: Handles HTTP requests/responses, input validation, and statistics retrieval
-- **Service Layer**: Contains business logic for FizzBuzz generation and coordinates with stats recording
-- **Stats Layer**: Manages request statistics with thread-safe operations
+- **Service Layer**: Contains business logic for FizzBuzz generation and request statistics
 
 ## Production Considerations
 

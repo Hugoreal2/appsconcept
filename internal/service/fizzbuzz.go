@@ -2,27 +2,18 @@ package service
 
 import (
 	"strconv"
-
-	"github.com/Hugoreal2/appsconcept/internal/stats"
 )
 
 // FizzBuzzService handles the business logic for fizzbuzz operations
-type FizzBuzzService struct {
-	statsService *stats.Service
-}
+type FizzBuzzService struct{}
 
 // NewFizzBuzzService creates a new fizzbuzz service
-func NewFizzBuzzService(statsService *stats.Service) *FizzBuzzService {
-	return &FizzBuzzService{
-		statsService: statsService,
-	}
+func NewFizzBuzzService() *FizzBuzzService {
+	return &FizzBuzzService{}
 }
 
 // GenerateFizzBuzz generates the fizzbuzz sequence based on the provided parameters
 func (s *FizzBuzzService) GenerateFizzBuzz(int1, int2, limit int, str1, str2 string) []string {
-	// Record the request for statistics
-	s.statsService.RecordRequest(int1, int2, limit, str1, str2)
-
 	result := make([]string, 0, limit)
 
 	for i := 1; i <= limit; i++ {

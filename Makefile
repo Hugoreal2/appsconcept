@@ -12,7 +12,7 @@ help: ## Show this help message
 
 build: ## Build the Go application
 	@echo "Building $(APP_NAME)..."
-	go build -o bin/$(APP_NAME) .
+	go build -o bin/$(APP_NAME) ./cmd/$(APP_NAME)
 
 run: ## Run the application locally
 	@echo "Starting $(APP_NAME) on port $(PORT)..."

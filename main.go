@@ -38,7 +38,7 @@ func main() {
 
 	// Initialize dependencies
 	statsService := stats.NewService()
-	fizzbuzzService := service.NewFizzBuzzService(statsService)
+	fizzbuzzService := service.NewFizzBuzzService()
 	fizzbuzzHandler := handler.NewFizzBuzzHandler(fizzbuzzService, statsService)
 
 	// Setup router

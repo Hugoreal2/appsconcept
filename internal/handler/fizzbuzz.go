@@ -78,6 +78,9 @@ func (h *FizzBuzzHandler) FizzBuzz(c *gin.Context) {
 		return
 	}
 
+	// Record the request for statistics (handler responsibility)
+	h.statsService.RecordRequest(req.Int1, req.Int2, req.Limit, req.Str1, req.Str2)
+
 	// Generate fizzbuzz sequence
 	result := h.service.GenerateFizzBuzz(req.Int1, req.Int2, req.Limit, req.Str1, req.Str2)
 
